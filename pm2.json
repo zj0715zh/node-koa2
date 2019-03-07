@@ -1,0 +1,27 @@
+{
+	"apps": [{
+		"name": "demo.ppdai.com",
+		"script": "server.js",
+		"exec_mode": "cluster",
+		"max_memory_restart": "200M",
+		"autorestart": true,
+		"node_args": [],
+		"args": [],
+		"env": {
+			// "PORT": 18080,
+            // "NODE_ENV": "production"
+		},
+		"log_date_format": "YYYY-MM-DD HH:mm Z",
+		"error_file": "log/demo_ppdai_error.log",
+		"out_file": "log/demo_ppdai_out.log",
+		"pid_file": "pids/demo_ppdai_pip.pid",
+		"instances": 4,
+		"min_uptime": "200s",
+		"max_restarts": 10,
+		"watch": false,
+		"ignore_watch": ["node_module"],
+		"merge_logs": true,
+		"exec_interpreter": "node",
+		"vizion": false
+	}]
+}
