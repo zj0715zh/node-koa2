@@ -1,6 +1,6 @@
 {
 	"apps": [{
-		"name": "demo.ppdai.com",
+		"name": "demo.test.com",
 		"script": "server.js",
 		"exec_mode": "cluster",
 		"max_memory_restart": "200M",
@@ -12,9 +12,9 @@
             // "NODE_ENV": "production"
 		},
 		"log_date_format": "YYYY-MM-DD HH:mm Z",
-		"error_file": "log/demo_ppdai_error.log",
-		"out_file": "log/demo_ppdai_out.log",
-		"pid_file": "pids/demo_ppdai_pip.pid",
+		"error_file": "log/demo_test_error.log",
+		"out_file": "log/demo_test_out.log",
+		"pid_file": "pids/demo_test_pip.pid",
 		"instances": 4,
 		"min_uptime": "200s",
 		"max_restarts": 10,

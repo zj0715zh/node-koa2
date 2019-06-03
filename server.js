@@ -11,6 +11,10 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const debug = require('debug')('koa2:server')
+//异常错误处理中间件
+const handleError = require('./middleware/error')
+//请求日志中间件
+const reqLogs = require('./middleware/log')
 const path = require('path')
 const config = require('./config')
 const pageRouter = require('./routes/index')
@@ -31,37 +35,12 @@ app.use(bodyparser())
     map: {'html': 'ejs'},
     extension: 'html'
   }))
+  .use(reqLogs)
   .use(router.routes())
   .use(router.allowedMethods())
+  .use(handleError)
 
-// logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  const res = ctx
-  await next()
-  const ms = new Date() - start
-  console.log(`"请求域名"：${res.request.host},"请求接口路径"：${res.request.path},"请求方法"：${res.request.method},"请求主体"：${res.request.body} - $ms`)
-  console.log(`"响应主体"：${res.body},"响应code"：${res.statusCode},"响应msg"：${res.statusMessage} - $ms`)
-})
 
-//404,500异常处理
-app.use(async(ctx, next) => {
-    try {
-        await next();
-        if (ctx.status === 404) {
-            ctx.throw(404);
-        }
-    } catch (err) {
-        console.error(err.stack);
-        const status = err.status || 500;
-        ctx.status = status;
-        if (status === 404) {
-            await ctx.render("error",{"status":status});
-        } else if (status === 500) {
-            await ctx.render("error",{"status":status});
-        }
-    }
-})
 router.get('/', async (ctx, next) => {
   // ctx.body = 'Hello World'
   ctx.state = {
